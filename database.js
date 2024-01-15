@@ -11,13 +11,13 @@ const pool = mysql
   })
   .promise();
 
-export async function getBalance(user_id) {
+export async function getBalance(userId) {
   try {
     const [rows] = await pool.query(
       `SELECT balance 
       FROM balances 
       WHERE user_id = ?`,
-      [user_id]
+      [userId]
     );
     return rows;
   } catch (err) {
@@ -51,7 +51,32 @@ export async function updateBalance(amount, userId) {
   }
 }
 
-// const notes = await createNote("yo", "yoyo");
-// const note = await getNote(1);
+export async function transferFunds(fromUserId, toUserId, amount) {
+  try {
+    const fromUserBalance = await getBalance(fromUserId);
+    if (fromUserBalance.length === 0 || fromUserBalance[0].balance < amount) {
+      return false;
+    }
+    await pool.query("START TRANSACTION");
 
-console.log(await updateBalance(-500, 2));
+    await updateBalance(-amount, fromUserId);
+
+    await updateBalance(amount, toUserId);
+
+    await pool.query(
+      `INSERT INTO transactions (from_user_id, to_user_id, amount)
+       VALUES (?, ?, ?)`,
+      [fromUserId, toUserId, amount]
+    );
+
+    await pool.query("COMMIT");
+    return { success: true, message: "Transfer completed successfully" };
+  } catch (err) {
+    await pool.query("ROLLBACK");
+    console.error(err);
+    return { success: false, message: "Transfer failed" };
+  }
+}
+
+// console.log(await updateBalance(-500, 2));
+console.log(await transferFunds(1, 2, 50));
