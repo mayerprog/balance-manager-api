@@ -7,6 +7,13 @@ CREATE TABLE IF NOT EXISTS users (
     email VARCHAR(255) NOT NULL UNIQUE
 );
 
+INSERT INTO users (name, email) 
+VALUES 
+('Alexey Ivanov', 'alexey.ivanov@example.com'),
+('Maria Sidorova', 'maria.sidorova@example.com'),
+('Ivan Petrov', 'ivan.petrov@example.com');
+
+
 CREATE TABLE IF NOT EXISTS balances (
     user_id INT PRIMARY KEY,
     balance DECIMAL(10, 2) NOT NULL DEFAULT 0.00,

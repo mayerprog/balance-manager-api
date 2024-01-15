@@ -11,38 +11,41 @@ const pool = mysql
   })
   .promise();
 
-export async function getNotes() {
+export async function getBalance(user_id) {
   try {
-    const [rows] = await pool.query("SELECT * FROM notes");
+    const [rows] = await pool.query(
+      `SELECT balance 
+      FROM balances 
+      WHERE user_id = ?`,
+      [user_id]
+    );
     return rows;
   } catch (err) {
     console.error(err);
   }
 }
 
-export async function getNote(id) {
+export async function updateBalance(amount, userId) {
   try {
     const [rows] = await pool.query(
-      `SELECT *
-    FROM notes
-    WHERE id = ?`,
-      [id]
+      `SELECT * FROM balances WHERE user_id = ?`,
+      [userId]
     );
-    return rows[0];
-  } catch (err) {
-    console.error(err);
-  }
-}
 
-export async function createNote(title, contents) {
-  try {
-    const [result] = await pool.query(
-      `INSERT INTO notes (title, contents)
+    if (rows.length === 0) {
+      await pool.query(
+        `INSERT INTO balances (user_id, balance)
         VALUES (?, ?)`,
-      [title, contents]
+        [userId, 0.0]
+      );
+    }
+    const [result] = await pool.query(
+      `UPDATE balances
+      SET balance = balance + ?
+      WHERE user_id = ?`,
+      [amount, userId]
     );
-    const note = await getNote(result.insertId);
-    return note;
+    return result;
   } catch (err) {
     console.error(err);
   }
@@ -51,4 +54,4 @@ export async function createNote(title, contents) {
 // const notes = await createNote("yo", "yoyo");
 // const note = await getNote(1);
 
-// console.log(notes);
+console.log(await updateBalance(-500, 2));
