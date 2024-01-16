@@ -25,6 +25,18 @@ export async function getBalance(userId) {
   }
 }
 
+export async function getUsers() {
+  try {
+    const [rows] = await pool.query(
+      `SELECT * 
+      FROM users`
+    );
+    return rows;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 export async function updateBalance(amount, userId) {
   try {
     const [rows] = await pool.query(
@@ -87,4 +99,7 @@ export async function transferFunds(fromUserId, toUserId, amount) {
 // const result = await updateBalance(5, 1);
 // console.log(result);
 // const result = await transferFunds(2, 1, 1);
+// console.log("result", result);
+
+// const result = await getUsers();
 // console.log("result", result);

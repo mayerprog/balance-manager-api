@@ -27,7 +27,6 @@ router.post("/updateBalance/:id", async (req, res) => {
 router.post("/transferFunds", async (req, res) => {
   try {
     const { fromUserId, toUserId, amount } = req.body;
-    console.log("fromUserId", fromUserId);
     const result = await transferFunds(fromUserId, toUserId, amount);
     if (result.success) {
       res.status(200).json(result);
