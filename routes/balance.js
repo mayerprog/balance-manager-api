@@ -24,4 +24,16 @@ router.post("/updateBalance/:id", async (req, res) => {
   }
 });
 
+router.post("/transferFunds", async (req, res) => {
+  try {
+    const { fromUserId, toUserId, amount } = req.body;
+    console.log("fromUserId", fromUserId);
+    const result = await transferFunds(fromUserId, toUserId, amount);
+
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 export default router;

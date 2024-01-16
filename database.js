@@ -39,7 +39,7 @@ export async function updateBalance(amount, userId) {
         [userId, 0.0]
       );
     }
-    await pool.query(
+    const [result] = await pool.query(
       `UPDATE balances
       SET balance = balance + ?
       WHERE user_id = ?`,
@@ -47,6 +47,7 @@ export async function updateBalance(amount, userId) {
     );
     const balance = await getBalance(userId);
     return balance;
+    // return result;
   } catch (err) {
     console.error(err);
   }
@@ -55,7 +56,9 @@ export async function updateBalance(amount, userId) {
 export async function transferFunds(fromUserId, toUserId, amount) {
   try {
     const fromUserBalance = await getBalance(fromUserId);
-    if (fromUserBalance.length === 0 || fromUserBalance[0].balance < amount) {
+    console.log("fromUserBalance", fromUserBalance);
+
+    if (!fromUserBalance || fromUserBalance.balance < amount) {
       console.log("not enough money");
       return false;
     }
@@ -81,5 +84,7 @@ export async function transferFunds(fromUserId, toUserId, amount) {
 }
 
 // console.log(await getBalance(2));
-// console.log(await updateBalance(10, 2));
-// console.log(await transferFunds(2, 1, 150));
+// const result = await updateBalance(5, 1);
+// console.log(result);
+// const result = await transferFunds(2, 1, 1);
+// console.log("result", result);
