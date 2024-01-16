@@ -18,7 +18,7 @@ router.post("/updateBalance/:id", async (req, res) => {
     const id = req.params.id;
     const balance = await updateBalance(amount, id);
 
-    res.status(200).json(balance);
+    res.status(201).json(balance);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -29,8 +29,11 @@ router.post("/transferFunds", async (req, res) => {
     const { fromUserId, toUserId, amount } = req.body;
     console.log("fromUserId", fromUserId);
     const result = await transferFunds(fromUserId, toUserId, amount);
-
-    res.status(200).json(result);
+    if (result.success) {
+      res.status(200).json(result);
+    } else {
+      res.status(400).json(result);
+    }
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
