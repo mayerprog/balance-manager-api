@@ -19,7 +19,7 @@ export async function getBalance(userId) {
       WHERE user_id = ?`,
       [userId]
     );
-    return rows[0];
+    return rows[0].balance;
   } catch (err) {
     console.error(err);
   }
@@ -68,9 +68,9 @@ export async function updateBalance(amount, userId) {
 export async function transferFunds(fromUserId, toUserId, amount) {
   try {
     const fromUserBalance = await getBalance(fromUserId);
-    console.log("fromUserBalance", fromUserBalance);
-
-    if (!fromUserBalance || fromUserBalance.balance < amount) {
+    console.log("fromUserBalance", typeof fromUserBalance);
+    console.log("amount", typeof amount);
+    if (!fromUserBalance || fromUserBalance < amount) {
       console.log("not enough money");
       return false;
     }
@@ -96,7 +96,7 @@ export async function transferFunds(fromUserId, toUserId, amount) {
 }
 
 // console.log(await getBalance(2));
-// const result = await updateBalance(5, 1);
+// const result = await updateBalance(5, 3);
 // console.log(result);
 // const result = await transferFunds(2, 1, 1);
 // console.log("result", result);

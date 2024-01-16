@@ -15,8 +15,9 @@ router.get("/getBalance/:id", async (req, res) => {
 router.post("/updateBalance/:id", async (req, res) => {
   try {
     const { amount } = req.body;
+    const amountNum = parseInt(amount);
     const id = req.params.id;
-    const balance = await updateBalance(amount, id);
+    const balance = await updateBalance(amountNum, id);
 
     res.status(201).json(balance);
   } catch (err) {
@@ -27,7 +28,9 @@ router.post("/updateBalance/:id", async (req, res) => {
 router.post("/transferFunds", async (req, res) => {
   try {
     const { fromUserId, toUserId, amount } = req.body;
-    const result = await transferFunds(fromUserId, toUserId, amount);
+    const amountNum = parseInt(amount);
+    const result = await transferFunds(fromUserId, toUserId, amountNum);
+    console.log("result", result);
     if (result.success) {
       res.status(200).json(result);
     } else {
