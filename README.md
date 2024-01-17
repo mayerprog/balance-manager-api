@@ -7,7 +7,7 @@ This Express.js API interacts with a MySQL database to manage user balances and 
 `GET /getBalance/:id`: Retrieves the balance of a user specified by their ID.
 
 - **_Example Request_**:
-- Request: `GET /getBalance/1`
+  Request: `GET /getBalance/1`
 
 `POST /updateBalance/:id`: Updates the balance for a specified user. If no balance record exists, a new record with a zero balance is created.
 
@@ -40,6 +40,10 @@ Then:
 - If you clone the project from GitHub, use the command `git clone https://github.com/mayerprog/balance-manager-api`
 - Install dependencies `yarn install`
 - Run `nodemon app.js` to run the server
+
+## Important onfiguration
+
+SQL configuration is located in init-db.sql file
 
 ## Tecnologies
 
