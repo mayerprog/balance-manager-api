@@ -37,7 +37,7 @@ To run this web app you need (if not installed yet):
 
 Then:
 
-- If you clone the project from GitHub, use the command `git clone https://github.com/mayerprog/balance-manager-api`
+- Clone the repository with `git clone https://github.com/mayerprog/balance-manager-api`
 - Install dependencies `yarn install`
 - Run `nodemon app.js` to run the server
 
