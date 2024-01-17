@@ -43,7 +43,8 @@ Then:
 
 ## Important onfiguration
 
-SQL configuration is located in init-db.sql file
+- SQL configuration is located in init-db.sql file
+- In file database.js put your db configuration: host, user, password. Database name is balance_db (check init-db.sql for more information).
 
 ## Tecnologies
 
