@@ -46,7 +46,6 @@ export async function updateBalance(amount, userId) {
       `SELECT * FROM balances WHERE user_id = ?`,
       [userId]
     );
-    // console.log("rows", rows);
     //create zero balance for a user if it does not exist
     if (rows.length === 0) {
       await pool.query(
@@ -96,12 +95,3 @@ export async function transferFunds(fromUserId, toUserId, amount) {
     return { success: false, message: "Transfer failed" };
   }
 }
-
-// console.log(await getBalance(2));
-// const result = await updateBalance(5, 3);
-// console.log(result);
-// const result = await transferFunds(2, 1, 1);
-// console.log("result", result);
-
-// const result = await getUsers();
-// console.log("result", result);
