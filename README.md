@@ -5,20 +5,23 @@ This Express.js API interacts with a MySQL database to manage user balances and 
 ### **API Features and Endpoints:**
 
 - `GET /getBalance/:id`: Retrieves the balance of a user specified by their ID.
-  **Example Request**:
-  Request: `GET /getBalance/1`
+
+**Example Request**:
+Request: `GET /getBalance/1`
 
 - `POST /updateBalance/:id`: Updates the balance for a specified user. If no balance record exists, a new record with a zero balance is created.
   **Request Body** (application/json): `amount` (required): The amount to update the balance by.
-  **Example Request**:
-  Request: `POST /updateBalance/2`
-  Request body: `{ "amount": 50 }`
+
+**Example Request**:
+Request: `POST /updateBalance/2`
+Request body: `{ "amount": 50 }`
 
 - `POST /transferFunds`: Transfers funds from one user to another. The transaction is logged, and balances are updated within a database transaction.
-  **Request Body** (application/json):
-  `fromUserId` (required): The ID of the user sending the funds.
-  `toUserId` (required): The ID of the user receiving the funds.
-  `amount` (required): The amount to transfer.
+
+**Request Body** (application/json):
+`fromUserId` (required): The ID of the user sending the funds.
+`toUserId` (required): The ID of the user receiving the funds.
+`amount` (required): The amount to transfer.
 
 **Example Request**:
 Request: `POST /transferFunds`
