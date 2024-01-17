@@ -19,6 +19,9 @@ export async function getBalance(userId) {
       WHERE user_id = ?`,
       [userId]
     );
+    if (!rows || rows.length === 0) {
+      return;
+    }
     return rows[0].balance;
   } catch (err) {
     console.error(err);
@@ -43,7 +46,8 @@ export async function updateBalance(amount, userId) {
       `SELECT * FROM balances WHERE user_id = ?`,
       [userId]
     );
-    //create zero balance if does not exist for
+    // console.log("rows", rows);
+    //create zero balance for a user if it does not exist
     if (rows.length === 0) {
       await pool.query(
         `INSERT INTO balances (user_id, balance)
@@ -59,7 +63,6 @@ export async function updateBalance(amount, userId) {
     );
     const balance = await getBalance(userId);
     return balance;
-    // return result;
   } catch (err) {
     console.error(err);
   }
@@ -68,8 +71,7 @@ export async function updateBalance(amount, userId) {
 export async function transferFunds(fromUserId, toUserId, amount) {
   try {
     const fromUserBalance = await getBalance(fromUserId);
-    console.log("fromUserBalance", typeof fromUserBalance);
-    console.log("amount", typeof amount);
+
     if (!fromUserBalance || fromUserBalance < amount) {
       console.log("not enough money");
       return false;

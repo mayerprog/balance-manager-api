@@ -12,6 +12,7 @@ VALUES
 ('Alexey Ivanov', 'alexey.ivanov@example.com'),
 ('Maria Sidorova', 'maria.sidorova@example.com'),
 ('Ivan Petrov', 'ivan.petrov@example.com');
+('Sasha Bely', 'sasha.bely@example.com');
 
 
 CREATE TABLE IF NOT EXISTS balances (
