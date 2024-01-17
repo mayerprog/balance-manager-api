@@ -15,7 +15,8 @@ router.get("/getBalance/:id", async (req, res) => {
 router.post("/updateBalance/:id", async (req, res) => {
   try {
     const { amount } = req.body;
-    const amountNum = parseInt(amount);
+    const amountNum = parseFloat(amount);
+
     const id = req.params.id;
     const balance = await updateBalance(amountNum, id);
 
@@ -28,7 +29,7 @@ router.post("/updateBalance/:id", async (req, res) => {
 router.post("/transferFunds", async (req, res) => {
   try {
     const { fromUserId, toUserId, amount } = req.body;
-    const amountNum = parseInt(amount);
+    const amountNum = parseFloat(amount);
     const result = await transferFunds(fromUserId, toUserId, amountNum);
     console.log("result", result);
     if (result.success) {
